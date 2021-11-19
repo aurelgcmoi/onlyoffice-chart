@@ -24,7 +24,7 @@ spec:
           configMap:
             name: configmap-local-onlyoffice-json
             items:
-            - key: local-onyoffice.json
+            - key: local-onlyoffice.json
               path: local-onlyoffice.json
         {{ if .Values.example.enabled }}
         - name: ds-example
