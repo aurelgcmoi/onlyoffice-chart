@@ -61,5 +61,5 @@ ingress:
     host: example.com
     secret: tls
 
-rejectUnauthorizedTls:
-  enabled: false
+useUnauthorizedTls:
+  enabled: true
