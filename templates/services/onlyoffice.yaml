@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: onlyoffice
+spec:
+  selector:
+    app: onlyoffice
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 80
+  type: {{ .Values.service.type }}

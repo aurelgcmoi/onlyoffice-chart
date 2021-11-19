@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onlyoffice
+  labels:
+    app: onlyoffice
+spec:
+  replicas: {{ .Values.documentserver.replicas }}
+  selector:
+    matchLabels:
+      app: onlyoffice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: onlyoffice
+    spec:
+      volumes:
+        - name: ds-files
+          persistentVolumeClaim:
+            claimName: ds-files
+        {{ if .Values.example.enabled }}
+        - name: ds-example
+          configMap:
+            name: ds-example
+            items:
+            - key: ds-example.conf
+              path: ds-example.conf
+        - name: ds-example-files
+          persistentVolumeClaim:
+            claimName: ds-example-files
+        {{ end }}
+      containers:
+        - name: documentserver
+          image: {{ .Values.documentserver.ContainerImage }}
+          ports:
+            - containerPort: 80
+          {{ if .Values.documentserver.livenessProbeEnabled }}
+          livenessProbe: {{ toYaml .Values.documentserver.livenessProbe | nindent 14 }}
+          {{ end }}
+          {{ if .Values.documentserver.startupProbeEnabled }}
+          startupProbe: {{ toYaml .Values.documentserver.startupProbe | nindent 14 }}
+          {{ end }}
+          env:
+          - name: DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: postgresql
+                key: postgresql-password
+          - name: AMQP_PWD
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq
+                key: rabbitmq-password
+          envFrom:
+          - secretRef:
+              name: jwt
+          envFrom:
+          - configMapRef:
+              name: onlyoffice-env
+          volumeMounts:
+          - name: ds-files
+            mountPath: /var/lib/onlyoffice/documentserver/App_Data/cache/files
+          {{ if .Values.example.enabled }}
+          - name: ds-example
+            mountPath: /etc/supervisor/conf.d/ds-example.conf
+            subPath: ds-example.conf
+          - name: ds-example-files
+            mountPath: /var/lib/onlyoffice/documentserver-example/files
+          {{ end }}
