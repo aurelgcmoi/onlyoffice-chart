@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  local-onlyoffice.json: |
+              {
+                      "services": {
+                              "CoAuthoring": {
+                                      "requestDefaults": {
+                                              "rejectUnauthorized": false
+                                      }
+                              }
+                      }
+              }
+kind: ConfigMap
+  name: configmap-local-onlyoffice-json
