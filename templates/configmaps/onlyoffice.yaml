@@ -13,3 +13,4 @@ data:
   AMQP_TYPE: {{ .Values.connections.amqpType }}
   AMQP_URI: {{ .Values.connections.amqpUri }}
   USE_UNAUTHORIZED_STORAGE: {{ .Values.rejectUnauthorizedTls.enabled }}
+
