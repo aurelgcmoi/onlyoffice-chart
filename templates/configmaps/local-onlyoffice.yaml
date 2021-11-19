@@ -11,4 +11,5 @@ data:
                       }
               }
 kind: ConfigMap
+metadata:
   name: configmap-local-onlyoffice-json
