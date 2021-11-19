@@ -20,9 +20,9 @@ spec:
         - name: ds-files
           persistentVolumeClaim:
             claimName: ds-files
-        - name: configmap-local-onlyoffice
+        - name: configmap-local-onlyoffice-json
           configMap:
-            name: configmap-local-onlyoffice
+            name: configmap-local-onlyoffice-json
             items:
             - key: local-onyoffice.json
               path: local-onlyoffice.json
@@ -68,7 +68,7 @@ spec:
           volumeMounts:
           - name: ds-files
             mountPath: /var/lib/onlyoffice/documentserver/App_Data/cache/files
-          - name: configmap-local-onlyoffice
+          - name: configmap-local-onlyoffice-json
             mountPath: /etc/onlyoffice/documentserver/local-onlyoffice.json
             subPath: local-onlyoffice.json
           {{ if .Values.example.enabled }}
