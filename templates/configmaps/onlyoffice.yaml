@@ -12,5 +12,5 @@ data:
   REDIS_SERVER_PORT: {{ .Values.connections.redisPort | quote}}
   AMQP_TYPE: {{ .Values.connections.amqpType }}
   AMQP_URI: {{ .Values.connections.amqpUri }}
-  USE_UNAUTHORIZED_STORAGE: {{ .Values.rejectUnauthorizedTls.enabled }}
+  USE_UNAUTHORIZED_STORAGE: {{ .Values.rejectUnauthorizedTls.enabled | quote}}
 
