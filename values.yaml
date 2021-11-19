@@ -60,3 +60,5 @@ ingress:
     enabled: false
     host: example.com
     secret: tls
+
+rejectUnauthorizedTls: false
